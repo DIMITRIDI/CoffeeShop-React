@@ -193,11 +193,18 @@ h2 {
             transform: translateY(-5px);
          }
 
-         .favorite {
+         &__favorite {
             position: absolute;
-            width: 35px;
-            height: 35px;
+            background: rgba(0,0,0,0);
+            border: 1px solid #CD853F;
+            border-radius: 5px;
             cursor: pointer;
+
+            span {
+               color: #CD853F;
+               font-size: 22px;
+               padding: 0 10px;
+            }
          }
 
          .img {
@@ -221,11 +228,17 @@ h2 {
             }
          }
 
-         button {
+         &__add {
             background: rgba(0,0,0,0);
             border: 1px solid #CD853F;
-            border-radius: 3px;
+            border-radius: 5px;
             cursor: pointer;
+
+            span {
+               color: #CD853F;
+               font-size: 22px;
+               padding: 0 10px;
+            }
          }
       }
    }
