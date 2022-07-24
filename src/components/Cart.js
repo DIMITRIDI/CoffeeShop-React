@@ -1,25 +1,19 @@
-function Cart() {
+function Cart({ onCloseCart, items = [] }) {
    return (
-      <div style={{display: 'none'}} className="overlay">
+      <div className="overlay">
          <div className="cart">
-            <h3>Cart<span className="cart__item-close">&times;</span></h3>
+            <h3>Cart<span onClick={onCloseCart} className="cart__item-close">&times;</span></h3>
             <div className="cart__items">
-               <div className="cart__item">
-                  <img className="cart__item-img" src="/images/coffee/1.jpg" alt="Solimo Coffee Beans" />
-                  <div className="cart__item-content">
-                     <h4>Solimo Coffee Beans 2 kg</h4>
-                     <b>10.73 $</b>
+               {items.map((obj) => (
+                  <div className="cart__item">
+                     <img className="cart__item-img" src={obj.imageUrl} alt={obj.alt} />
+                     <div className="cart__item-content">
+                        <h4>{obj.name}</h4>
+                        <b>{obj.price} $</b>
+                     </div>
+                     <span className="cart__item-close">&times;</span> 
                   </div>
-                  <span className="cart__item-close">&times;</span> 
-               </div>
-               <div className="cart__item">
-                  <img className="cart__item-img" src="/images/coffee/1.jpg" alt="Solimo Coffee Beans" />
-                  <div className="cart__item-content">
-                     <h4>Solimo Coffee Beans 2 kg</h4>
-                     <b>10.73 $</b>
-                  </div>
-                  <span className="cart__item-close">&times;</span> 
-               </div>
+               ))}
             </div>
             <div className="cart__total-items">
                <ul className='cart__total'>
