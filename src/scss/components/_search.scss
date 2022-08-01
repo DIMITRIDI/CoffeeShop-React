@@ -1,0 +1,49 @@
+@import '../variables';
+
+.search__block {
+   display: flex;
+   align-items: center;
+   padding: 10px 0;
+
+   &-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 260px;
+      border: 1px solid $coffee;
+      box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25);
+      border-radius: 4px;
+      margin-left: 20px;
+      margin-right: 0;
+      padding: 0 15px;
+
+      img {
+         width: 20px;
+         height: 20px;
+      }
+
+      input {
+         font-size: 16px;
+         background-color: inherit;
+         border: none;
+         padding: 5px 10px;
+         margin-left: 10px;
+      }
+   }
+
+   &-close {
+      position: absolute;
+      right: 15px;
+      color: $black;
+      font-weight: bold;
+      font-size: 26px;
+      cursor: pointer;
+      transition: 0.3s;
+      opacity: 0.5;
+      transition: opacity 0.3s ease-in-out;
+
+      &:hover {
+         opacity: 1;
+      }
+   }
+}

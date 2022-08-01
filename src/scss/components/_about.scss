@@ -1,0 +1,28 @@
+.about {
+   max-width: 1440px;
+   margin: 100px auto;
+   padding: 0 15px;
+
+   &__wrapper {
+      display: flex;
+      justify-content: center;
+   }
+
+   &__img {
+      width: 250px;
+      height: 366px;
+   }
+
+   &__content {
+      padding: 50px;
+   }
+
+   h2 {
+      padding-top: 0;
+   }
+
+   p {
+      text-align: center;
+      padding-top: 20px;
+   }
+}

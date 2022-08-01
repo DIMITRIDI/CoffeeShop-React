@@ -1,0 +1,10 @@
+[
+   { "id": 0, "title": "Solimo Coffee Beans 2 kg", "alt": "Solimo Coffee Beans', price: '10.73", "imageUrl": "/assets/images/coffee/1.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 1, "title": "Presto Coffee Beans 1 kg", "alt": "Presto Coffee Beans", "price": "15.99", "imageUrl": "/assets/images/coffee/2.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 2, "title": "AROMISTICO Coffee 1 kg", "alt": "AROMISTICO Coffee", "price": "6.93", "imageUrl": "/assets/images/coffee/3.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 3, "title": "Lavazza Caffe Espresso 2 kg", "alt": "Lavazza Caffe Espresso", "price": "13.79", "imageUrl": "/assets/images/coffee/4.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 4, "title": "Bourbon Espresso Manchester 320 g", "alt": "Bourbon Espresso Manchester", "price": "5.11", "imageUrl": "/assets/images/coffee/5.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 5, "title": "Kopi Luwak Roasied Coffee 370 g", "alt": "Kopi Luwak Roasied Coffee", "price": "12.65", "imageUrl": "/assets/images/coffee/6.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 6, "title": "Jamaica Blue Mountain Coffee 2 kg", "alt": "Jamaica Blue Mountain Coffee", "price": "15.99", "imageUrl": "/assets/images/coffee/7.jpg", "weights": [200, 300, 500, 800]},
+   { "id": 7, "title": "100% Arabica Cafedo Brasil 320 g", "alt": "100% Arabica Cafedo Brasil", "price": "9.79", "imageUrl": "/assets/images/coffee/8.jpg", "weights": [200, 300, 500, 800]}
+]

@@ -1,0 +1,112 @@
+@import '../variables';
+
+.button {
+   display: inline-block;
+   background-color: $coffee;
+   border-radius: 10px;
+   padding: 10px 20px;
+   min-width: 100px;
+   text-align: center;
+   cursor: pointer;
+   transition: background-color $duration ease-in-out, border-color $duration ease-in-out;
+   border: 1px solid transparent;
+
+   &, span {
+      color: #fff;
+   }
+
+   i, span, path, svg {
+      transition: all $duration ease-in-out;
+   }
+
+   &:hover {
+      background-color: darken($coffee, 8%);
+   }
+
+   &:active {
+      background-color: darken($coffee, 12%);
+      transform: translateY(1px);
+   }
+
+   &__black {
+      background-color: $black;
+
+      &:hover,
+      &:active {
+         background-color:  $black;
+      }
+   }
+
+   &__outline {
+      background-color: transparent;
+      border-color: $coffee;
+
+      &, span {
+         color: $coffee;
+      }
+
+      svg {
+         path {
+            fill: $coffee;
+         }
+      }
+
+      &:hover {
+         background-color: $coffee;
+         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+
+         &, span {
+         color: #fff;
+         }
+
+         svg {
+            path {
+               fill: #fff;
+            }
+         }
+      }
+
+      &:active {
+         background-color: darken($coffee, 8%);
+      }
+   }
+
+   &__delimiter {
+      width: 1px;
+      height: 25px;
+      background-color: rgba(255, 255, 255, 0.25);
+      margin-left: 14px;
+      margin-right: 14px;
+   }
+
+   &__add {
+      svg {
+         margin-right: 2px;
+      }
+
+      span {
+         font-weight: 600;
+         font-size: 16px;
+         padding: 0 8px;
+      }
+
+      &:hover {
+         i {
+            background-color: #fff;
+            color: $coffee;
+         }
+      }
+
+      i {
+         display: inline-block;
+         border-radius: 50%;
+         background-color: $coffee;
+         color: #fff;
+         font-weight: 700;
+         width: 22px;
+         height: 22px;
+         font-size: 13px;
+         line-height: 22px;
+      }
+   }
+}
