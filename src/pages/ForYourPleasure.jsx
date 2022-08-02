@@ -36,7 +36,7 @@ const ForYourPleasure = () => {
                </div>
                <div className="cards">
                   {coffees.map((obj) => (
-                     <Card {...obj} />
+                     <Card key={obj.id} {...obj} />
                   ))}
                </div>
             </div>

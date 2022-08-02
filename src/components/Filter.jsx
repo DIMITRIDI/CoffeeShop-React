@@ -10,7 +10,7 @@ function Filter() {
             <p>Or filter</p>
             <ul >
                {categories.map((value, i) => (
-                  <li onClick={() => setActiveIndex(i)} key={i} className={activeIndex === i ? 'active' : ''} >{value}</li>
+                  <li key={i} onClick={() => setActiveIndex(i)} className={activeIndex === i ? 'active' : ''} >{value}</li>
                ))}
             </ul>
          </div>

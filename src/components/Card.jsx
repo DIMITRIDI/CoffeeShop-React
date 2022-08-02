@@ -12,8 +12,8 @@ function Card({ imageUrl, alt, title, price, weights }) {
          <div className="card__block-selector">
             <ul>
                {weights.map((weight, i) => (
-                     <li onClick={() => setActiveWeight(i)} className={activeWeight === i ? 'active' : ''} >{weight} g</li>
-                  ))}
+                  <li key={weight} onClick={() => setActiveWeight(i)} className={activeWeight === i ? 'active' : ''} >{weight} g</li>
+               ))}
             </ul>
          </div>
          <div className="card__bottom">
