@@ -12,7 +12,7 @@ function Sort() {
 
    const [openBrand, setOpenBrand] = React.useState(false);
    const [selectedBrand, setSelectedBrand] = React.useState(0);
-   const listOpenBrand = ["all", "Jardin", "Jacobs", "Lavazza", "Jockey", "Nescafe"];
+   const listOpenBrand = ["all", "Jardin", "Jacobs", "Lavazza", "Kimbo", "Nescafe"];
    const sortName = listOpenBrand[selectedBrand];
 
    const onClickListOpenBrend = (j) => {

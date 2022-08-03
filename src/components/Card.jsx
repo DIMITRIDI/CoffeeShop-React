@@ -7,7 +7,9 @@ function Card({ imageUrl, alt, title, price, weights }) {
    return (
       <div className="card">
          <img className="card__favorite" src={heart} alt="favorite" />
-         <img className="img" src={imageUrl} alt={alt} />
+         <div className="card__img">
+            <img className="img" src={imageUrl} alt={alt} />
+         </div>
          <h3>{title}</h3>
          <div className="card__block-selector">
             <ul>

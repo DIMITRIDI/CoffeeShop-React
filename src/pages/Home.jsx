@@ -11,9 +11,17 @@ import Card from '../components/Card';
 import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
 
-import coffees from "../assets/coffees.json";
-
 const Home = () => {
+   const [coffees, setCoffees] = React.useState([]);
+
+   React.useEffect(() => {
+      fetch('https://62dc35ac57ac3c3f3c583299.mockapi.io/items')
+         .then((res) => res.json())
+         .then((arr) => {
+            setCoffees(arr);
+         });
+   }, []);
+
    return (
       <>
          {/* <Cart /> */}
