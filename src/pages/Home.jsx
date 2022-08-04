@@ -7,24 +7,27 @@ import Filter from '../components/Filter';
 import Sort from '../components/Sort';
 import Search from '../components/Search';
 import Card from '../components/Card';
+import Footer from "../components/Footer";
+import Skeleton from '../components/Card/Skeleton';
 
 import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
 
 const Home = () => {
    const [coffees, setCoffees] = React.useState([]);
+   const [isLoading, setIsLoading] = React.useState(true);
 
    React.useEffect(() => {
       fetch('https://62dc35ac57ac3c3f3c583299.mockapi.io/items')
          .then((res) => res.json())
          .then((arr) => {
             setCoffees(arr);
+            setIsLoading(false);
          });
    }, []);
 
    return (
       <>
-         {/* <Cart /> */}
          <header className="header header__home-bg">
             <div className="wrapper">
                <div className="header__top">
@@ -47,12 +50,11 @@ const Home = () => {
                   <Search />
                </div>
                <div className="cards">
-                  {coffees.map((obj) => (
-                     <Card key={obj.id} {...obj} />
-                  ))}
+                  {isLoading ? [...new Array(8)].map((_, index) => <Skeleton key={index} />) : coffees.map(obj => <Card key={obj.id} {...obj} />)}
                </div>
             </div>
          </div>
+         <Footer />
       </>
    )
 }

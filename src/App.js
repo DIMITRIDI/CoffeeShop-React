@@ -5,8 +5,7 @@ import Home from "./pages/Home";
 import OurCoffee from "./pages/OurCoffee";
 import ForYourPleasure from "./pages/ForYourPleasure";
 import Page404 from "./pages/404";
-import Footer from "./components/Footer";
-// import Cart from "./components/Cart";
+import Cart from "./pages/Cart";
 
 import './scss/app.scss';
 
@@ -18,9 +17,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/our-coffee" element={<OurCoffee />} />
             <Route path="/four-your-pleasure" element={<ForYourPleasure />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<Page404 />} />
          </Routes>
-         <Footer />
       </>
    );
 }

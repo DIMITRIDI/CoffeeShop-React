@@ -7,6 +7,7 @@ import Filter from '../components/Filter';
 import Sort from '../components/Sort';
 import Search from '../components/Search';
 import Card from '../components/Card';
+import Footer from "../components/Footer";
 
 import ourAbout from "../assets/images/our-about.jpg";
 
@@ -15,7 +16,6 @@ import coffees from "../assets/coffees.json";
 const OurCoffee = () => {
    return (
       <>
-         {/* <Cart /> */}
          <header className="header header__our-bg">
             <div className="wrapper">
                <div className="header__top">
@@ -41,6 +41,7 @@ const OurCoffee = () => {
                </div>
             </div>
          </div>
+         <Footer />
       </>
    )
 }

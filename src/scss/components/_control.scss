@@ -10,7 +10,19 @@
       font-size: 16px;
       line-height: 19px;
       list-style: none;
+      transition: transform $duration ease-in-out;
       cursor: pointer;
+
+      &:hover {
+         transform: scale(1.1);
+      }
+
+      &.active {
+         transform: scale(1.1);
+         font-weight: 700;
+         text-decoration: underline;
+         cursor: default;
+      }
 
       span {
          color: $white;

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import footerLogo from "../assets/images/footer-logo.png";
 import aboutLogo from "../assets/images/about-logo.png";
@@ -10,9 +10,9 @@ function Footer() {
             <div className="footer__top">
                <img src={footerLogo} alt="coffee" />
                <ul>
-                  <Link to="/"><li>Coffee house</li></Link>
-                  <Link to="/our-coffee"><li>Our coffee</li></Link>
-                  <Link to="/four-your-pleasure"><li className="p0">For your pleasure</li></Link>
+                  <NavLink to="/">Coffee house</NavLink>
+                  <NavLink to="/our-coffee">Our coffee</NavLink>
+                  <NavLink className="p0" to="/four-your-pleasure">For your pleasure</NavLink>
                </ul>
             </div>
             <img className='img__title' src={aboutLogo} alt="coffee" />

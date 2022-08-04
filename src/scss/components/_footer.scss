@@ -18,14 +18,26 @@
       ul {
          display: flex;
 
-         li {
+         a {
             padding-right: 40px;
             font-size: 12px;
             line-height: 17px;
             list-style: none;
             color: $black;
             text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            transition: transform $duration ease-in-out;
             cursor: pointer;
+            
+            &:hover {
+               transform: scale(1.1);
+            }
+
+            &.active {
+               transform: scale(1.1);
+               font-weight: 700;
+               text-decoration: underline;
+               cursor: default;
+            }
          }
 
          .p0 {

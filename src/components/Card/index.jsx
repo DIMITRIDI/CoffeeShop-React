@@ -1,6 +1,6 @@
 import React from 'react';
 
-import heart from "../assets/images/heart.svg";
+import heart from "../../assets/images/heart.svg";
 
 function Card({ imageUrl, alt, title, price, weights }) {
    const [activeWeight, setActiveWeight] = React.useState(0);
