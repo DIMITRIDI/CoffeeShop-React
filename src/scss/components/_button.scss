@@ -12,7 +12,7 @@
    border: 1px solid transparent;
 
    &, span {
-      color: #fff;
+      color: $white;
    }
 
    i, span, path, svg {
@@ -26,15 +26,6 @@
    &:active {
       background-color: darken($coffee, 12%);
       transform: translateY(1px);
-   }
-
-   &__black {
-      background-color: $black;
-
-      &:hover,
-      &:active {
-         background-color:  $black;
-      }
    }
 
    &__outline {
@@ -56,12 +47,12 @@
          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 
          &, span {
-         color: #fff;
+         color: $white;
          }
 
          svg {
             path {
-               fill: #fff;
+               fill: $white;
             }
          }
       }
@@ -92,7 +83,7 @@
 
       &:hover {
          i {
-            background-color: #fff;
+            background-color: $white;
             color: $coffee;
          }
       }
@@ -101,12 +92,18 @@
          display: inline-block;
          border-radius: 50%;
          background-color: $coffee;
-         color: #fff;
+         color: $white;
          font-weight: 700;
          width: 22px;
          height: 22px;
          font-size: 13px;
          line-height: 22px;
       }
+   }
+
+   &__param {
+      width: 200px;
+      height: 45px;
+      margin-bottom: 50px;
    }
 }

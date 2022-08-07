@@ -16,15 +16,29 @@ import homeAbout from "../assets/images/home-about.jpg";
 const Home = () => {
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
+   const [categoryId, setCategoryId] = React.useState(0);
+   const [sortType, setSortType] = React.useState({
+      name: 'popularity desc',
+      sortProperty: 'rating'
+   });
+   const [sortTypeBrand, setSortTypeBrand] = React.useState(0);
 
    React.useEffect(() => {
-      fetch('https://62dc35ac57ac3c3f3c583299.mockapi.io/items')
+      setIsLoading(true);
+
+      const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+      const sortBy = sortType.sortProperty.replace('-', '');
+      const category = categoryId > 0 ? `category=${categoryId}` : '';
+      const brand = sortTypeBrand > 0 ? `brand=${sortTypeBrand}` : '';
+
+      fetch(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?${category}&${brand}&sortBy=${sortBy}&order=${order}`)
          .then((res) => res.json())
          .then((arr) => {
             setCoffees(arr);
             setIsLoading(false);
          });
-   }, []);
+      // window.scrollTo(0, 0);
+   }, [categoryId, sortType, sortTypeBrand]);
 
    return (
       <>
@@ -45,8 +59,11 @@ const Home = () => {
             <div className="wrapper">
                <h2>Our Best</h2>
                <div className="best__block">
-                  <Filter />
-                  <Sort />
+                  <Filter value={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
+                  <Sort 
+                     value={sortType} valueBrand={sortTypeBrand} 
+                     onChangeSort={(i) => setSortType(i)} onChangeSortBrand={(i) => setSortTypeBrand(i)}
+                  />
                   <Search />
                </div>
                <div className="cards">

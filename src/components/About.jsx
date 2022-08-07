@@ -6,7 +6,10 @@ const About = ( props ) => {
    return (
       <div className="about">
          <div className="about__wrapper">
-            <img className="about__img" src={props.image} alt="drinking coffee" />
+            <div className="about__img">
+               <img src={props.image} alt="drinking coffee" />
+            </div>
+            
             <div className="about__content">
                <h2>{props.title}</h2>
                <img src={aboutLogo} alt="coffee" className="img__title" />

@@ -1,8 +1,12 @@
 @import '../variables';
 
+.flex {
+   display: flex;
+}
+
 .sort {
    position: relative;
-   width: 170px;
+   width: 205px;
    padding: 10px 0;
 
    &__label {

@@ -6,6 +6,10 @@
    &__wrapper {
       display: flex;
       justify-content: center;
+
+      @media (max-width: 768px) { 
+         flex-wrap: wrap;
+      }
    }
 
    &__img {
