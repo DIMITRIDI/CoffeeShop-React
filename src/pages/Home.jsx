@@ -12,11 +12,13 @@ import Skeleton from '../components/Card/Skeleton';
 
 import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
+import Pagination from '../components/Pagination';
 
-const Home = () => {
+const Home = ({ searchValue, setSearchValue }) => {
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
    const [categoryId, setCategoryId] = React.useState(0);
+   const [currentPage, setCurrentPage] = React.useState(1);
    const [sortType, setSortType] = React.useState({
       name: 'popularity desc',
       sortProperty: 'rating'
@@ -29,16 +31,20 @@ const Home = () => {
       const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
       const sortBy = sortType.sortProperty.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
-      const brand = sortTypeBrand > 0 ? `brand=${sortTypeBrand}` : '';
+      const brand = sortTypeBrand > 0 ? `&brand=${sortTypeBrand}` : '';
+      const search = searchValue ? `&search=${searchValue}` : '';
 
-      fetch(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?${category}&${brand}&sortBy=${sortBy}&order=${order}`)
+      fetch(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?page=${currentPage}&limit=8&${category}${brand}&sortBy=${sortBy}&order=${order}${search}`)
          .then((res) => res.json())
          .then((arr) => {
             setCoffees(arr);
             setIsLoading(false);
          });
       // window.scrollTo(0, 0);
-   }, [categoryId, sortType, sortTypeBrand]);
+   }, [categoryId, sortType, sortTypeBrand, searchValue, currentPage]);
+
+   const coffeesContext = coffees.map(obj => <Card key={obj.id} {...obj} />);
+   const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
    return (
       <>
@@ -64,11 +70,12 @@ const Home = () => {
                      value={sortType} valueBrand={sortTypeBrand} 
                      onChangeSort={(i) => setSortType(i)} onChangeSortBrand={(i) => setSortTypeBrand(i)}
                   />
-                  <Search />
+                  <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                </div>
                <div className="cards">
-                  {isLoading ? [...new Array(8)].map((_, index) => <Skeleton key={index} />) : coffees.map(obj => <Card key={obj.id} {...obj} />)}
+                  {isLoading ? sceletons : coffeesContext}
                </div>
+               <Pagination onChangePage={number => setCurrentPage(number)} />
             </div>
          </div>
          <Footer />

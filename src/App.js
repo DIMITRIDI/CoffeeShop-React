@@ -10,11 +10,13 @@ import Cart from "./pages/Cart";
 import './scss/app.scss';
 
 function App() {
+   const [searchValue, setSearchValue] = React.useState('');
+
    return (
       <>
          {/* <Cart /> */}
          <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home searchValue={searchValue} setSearchValue={setSearchValue} />} />
             <Route path="/our-coffee" element={<OurCoffee />} />
             <Route path="/four-your-pleasure" element={<ForYourPleasure />} />
             <Route path="/cart" element={<Cart />} />
