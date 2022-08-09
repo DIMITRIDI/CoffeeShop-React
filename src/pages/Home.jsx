@@ -13,8 +13,10 @@ import Skeleton from '../components/Card/Skeleton';
 import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
 
-const Home = ({ searchValue, setSearchValue }) => {
+const Home = () => {
+   const { searchValue } = React.useContext(SearchContext);
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
    const [categoryId, setCategoryId] = React.useState(0);
@@ -70,7 +72,7 @@ const Home = ({ searchValue, setSearchValue }) => {
                      value={sortType} valueBrand={sortTypeBrand} 
                      onChangeSort={(i) => setSortType(i)} onChangeSortBrand={(i) => setSortTypeBrand(i)}
                   />
-                  <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+                  <Search />
                </div>
                <div className="cards">
                   {isLoading ? sceletons : coffeesContext}

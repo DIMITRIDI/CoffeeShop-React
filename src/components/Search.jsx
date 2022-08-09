@@ -1,6 +1,12 @@
+import React from 'react';
+
+import { SearchContext } from '../App';
+
 import search from "../assets/images/search.svg";
 
-function Search({ searchValue, setSearchValue }) {
+function Search() {
+   const { searchValue, setSearchValue } = React.useContext(SearchContext);
+
    return (
       <div className="search__block">
          <p>Lookiing for:</p>
