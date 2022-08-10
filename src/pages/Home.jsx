@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
@@ -16,24 +19,26 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 
 const Home = () => {
+   const dispatch = useDispatch();
+   const { categoryId, sort, sortBrand } = useSelector((state) => state.filter);
+
+
    const { searchValue } = React.useContext(SearchContext);
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
-   const [categoryId, setCategoryId] = React.useState(0);
    const [currentPage, setCurrentPage] = React.useState(1);
-   const [sortType, setSortType] = React.useState({
-      name: 'popularity desc',
-      sortProperty: 'rating'
-   });
-   const [sortTypeBrand, setSortTypeBrand] = React.useState(0);
+
+   const onChangeCategory = (id) => {
+      dispatch(setCategoryId(id));
+   }
 
    React.useEffect(() => {
       setIsLoading(true);
 
-      const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
-      const sortBy = sortType.sortProperty.replace('-', '');
+      const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+      const sortBy = sort.sortProperty.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
-      const brand = sortTypeBrand > 0 ? `&brand=${sortTypeBrand}` : '';
+      const brand = sortBrand > 0 ? `&brand=${sortBrand}` : '';
       const search = searchValue ? `&search=${searchValue}` : '';
 
       fetch(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?page=${currentPage}&limit=8&${category}${brand}&sortBy=${sortBy}&order=${order}${search}`)
@@ -43,7 +48,7 @@ const Home = () => {
             setIsLoading(false);
          });
       // window.scrollTo(0, 0);
-   }, [categoryId, sortType, sortTypeBrand, searchValue, currentPage]);
+   }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
    const coffeesContext = coffees.map(obj => <Card key={obj.id} {...obj} />);
    const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
@@ -67,11 +72,8 @@ const Home = () => {
             <div className="wrapper">
                <h2>Our Best</h2>
                <div className="best__block">
-                  <Filter value={categoryId} onChangeCategory={(i) => setCategoryId(i)} />
-                  <Sort 
-                     value={sortType} valueBrand={sortTypeBrand} 
-                     onChangeSort={(i) => setSortType(i)} onChangeSortBrand={(i) => setSortTypeBrand(i)}
-                  />
+                  <Filter value={categoryId} onChangeCategory={onChangeCategory} />
+                  <Sort />
                   <Search />
                </div>
                <div className="cards">
