@@ -1,7 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
 
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
@@ -20,16 +21,19 @@ import { SearchContext } from '../App';
 
 const Home = () => {
    const dispatch = useDispatch();
-   const { categoryId, sort, sortBrand } = useSelector((state) => state.filter);
+   const { categoryId, sort, sortBrand, currentPage } = useSelector((state) => state.filter);
 
 
    const { searchValue } = React.useContext(SearchContext);
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
-   const [currentPage, setCurrentPage] = React.useState(1);
 
    const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
+   }
+
+   const onChangePage = number => {
+      dispatch(setCurrentPage(number));
    }
 
    React.useEffect(() => {
@@ -41,12 +45,11 @@ const Home = () => {
       const brand = sortBrand > 0 ? `&brand=${sortBrand}` : '';
       const search = searchValue ? `&search=${searchValue}` : '';
 
-      fetch(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?page=${currentPage}&limit=8&${category}${brand}&sortBy=${sortBy}&order=${order}${search}`)
-         .then((res) => res.json())
-         .then((arr) => {
-            setCoffees(arr);
-            setIsLoading(false);
-         });
+      axios.get(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?page=${currentPage}&limit=8&${category}${brand}&sortBy=${sortBy}&order=${order}${search}`)
+      .then(res => {
+         setCoffees(res.data);
+         setIsLoading(false);
+      })
       // window.scrollTo(0, 0);
    }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
@@ -79,7 +82,7 @@ const Home = () => {
                <div className="cards">
                   {isLoading ? sceletons : coffeesContext}
                </div>
-               <Pagination onChangePage={number => setCurrentPage(number)} />
+               <Pagination currentPage={currentPage} onChangePage={onChangePage} />
             </div>
          </div>
          <Footer />

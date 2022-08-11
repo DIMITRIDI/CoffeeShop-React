@@ -9,7 +9,7 @@ import Cart from "./pages/Cart";
 
 import './scss/app.scss';
 
-export const SearchContext = React.createContext('');
+export const SearchContext = React.createContext();
 
 function App() {
    const [searchValue, setSearchValue] = React.useState('');
