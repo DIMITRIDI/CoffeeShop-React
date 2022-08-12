@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { sortList } from '../components/Sort';
 
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
@@ -20,7 +23,10 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 
 const Home = () => {
+   const navigate = useNavigate();
    const dispatch = useDispatch();
+   const isSearch = React.useRef(false);
+   const isMounted = React.useRef(false);
    const { categoryId, sort, sortBrand, currentPage } = useSelector((state) => state.filter);
 
 
@@ -28,15 +34,15 @@ const Home = () => {
    const [coffees, setCoffees] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
 
-   const onChangeCategory = (id) => {
-      dispatch(setCategoryId(id));
-   }
+   const onChangeCategory = React.useCallback((idx) => {
+      dispatch(setCategoryId(idx));
+   }, []);
 
-   const onChangePage = number => {
-      dispatch(setCurrentPage(number));
-   }
+   const onChangePage = (page) => {
+      dispatch(setCurrentPage(page));
+   };
 
-   React.useEffect(() => {
+   const fetchCoffees = () => {
       setIsLoading(true);
 
       const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
@@ -51,6 +57,47 @@ const Home = () => {
          setIsLoading(false);
       })
       // window.scrollTo(0, 0);
+   }
+   
+   // Если изменили параметры и был первый рендер, то проводим следующую проверку
+   React.useEffect(() => {
+      if (isMounted.current) {
+         const queryString = qs.stringify({
+            sortProperty: sort.sortProperty,
+            sortBrand,
+            categoryId,
+            currentPage,
+         });
+
+         navigate(`?${queryString}`);
+      }
+      isMounted.current = true;
+   }, [categoryId, sort.sortProperty, sortBrand, currentPage]);
+
+   // Если был первый рендер, то проверяем url-параметры и сохраняем в Redux 
+   React.useEffect(() => {
+      if (window.location.search) {
+         const params = qs.parse(window.location.search.substring(1));
+         
+         const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
+
+         dispatch(
+            setFilters({
+               ...params,
+               sort,
+            }),
+         );
+         isSearch.current = true;
+      }
+   }, []);
+
+   // Если был первый рендер, то делаем запрос
+   React.useEffect(() => {
+      if (!isSearch.current) {
+         fetchCoffees();
+      }
+
+      isSearch.current = false;
    }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
    const coffeesContext = coffees.map(obj => <Card key={obj.id} {...obj} />);
