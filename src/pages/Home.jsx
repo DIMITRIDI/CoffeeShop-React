@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
 import { sortList } from '../components/Sort';
 
 import Navigation from '../components/Navigation';
@@ -27,7 +27,7 @@ const Home = () => {
    const dispatch = useDispatch();
    const isSearch = React.useRef(false);
    const isMounted = React.useRef(false);
-   const { categoryId, sort, sortBrand, currentPage } = useSelector((state) => state.filter);
+   const { categoryId, sort, sortBrand, currentPage } = useSelector(selectFilter);
 
 
    const { searchValue } = React.useContext(SearchContext);
