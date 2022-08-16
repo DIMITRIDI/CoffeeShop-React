@@ -15,10 +15,10 @@
       border-radius: 4px;
       margin-left: 10px;
       margin-right: 0;
-      padding: 0 15px;
+      padding: 0 10px;
 
-      @media (max-width: 768px) { 
-         width: 200px;
+      @media (max-width: 480px) { 
+         width: 160px;
       }
 
       img {
@@ -32,6 +32,11 @@
          border: none;
          padding: 5px 10px;
          margin-left: 10px;
+
+         @media (max-width: 480px) { 
+            font-size: 14px;
+            padding: 5px 0px;
+         }
       }
    }
 

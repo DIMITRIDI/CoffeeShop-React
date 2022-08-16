@@ -1,12 +1,12 @@
 import React from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategoryId, setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
-import { sortList } from '../components/Sort';
+import { fetchCoffees } from '../redux/slices/coffeeSlice';
 
+import { sortList } from '../components/Sort';
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
 import About from '../components/About';
@@ -27,12 +27,10 @@ const Home = () => {
    const dispatch = useDispatch();
    const isSearch = React.useRef(false);
    const isMounted = React.useRef(false);
+   const { items, status} = useSelector((state) => state.coffee);
    const { categoryId, sort, sortBrand, currentPage } = useSelector(selectFilter);
 
-
    const { searchValue } = React.useContext(SearchContext);
-   const [coffees, setCoffees] = React.useState([]);
-   const [isLoading, setIsLoading] = React.useState(true);
 
    const onChangeCategory = React.useCallback((idx) => {
       dispatch(setCategoryId(idx));
@@ -42,22 +40,24 @@ const Home = () => {
       dispatch(setCurrentPage(page));
    };
 
-   const fetchCoffees = () => {
-      setIsLoading(true);
-
+   const getCoffees = async () => {
       const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
       const sortBy = sort.sortProperty.replace('-', '');
       const category = categoryId > 0 ? `category=${categoryId}` : '';
       const brand = sortBrand > 0 ? `&brand=${sortBrand}` : '';
       const search = searchValue ? `&search=${searchValue}` : '';
 
-      axios.get(`https://62dc35ac57ac3c3f3c583299.mockapi.io/items?page=${currentPage}&limit=8&${category}${brand}&sortBy=${sortBy}&order=${order}${search}`)
-      .then(res => {
-         setCoffees(res.data);
-         setIsLoading(false);
-      })
+      dispatch(fetchCoffees({
+         order,
+         sortBy,
+         category,
+         brand,
+         search,
+         currentPage
+      }));
+
       // window.scrollTo(0, 0);
-   }
+   };
    
    // Если изменили параметры и был первый рендер, то проводим следующую проверку
    React.useEffect(() => {
@@ -94,13 +94,13 @@ const Home = () => {
    // Если был первый рендер, то делаем запрос
    React.useEffect(() => {
       if (!isSearch.current) {
-         fetchCoffees();
+         getCoffees();
       }
 
       isSearch.current = false;
    }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
-   const coffeesContext = coffees.map(obj => <Card key={obj.id} {...obj} />);
+   const coffeesContext = items.map(obj => <Card key={obj.id} {...obj} />);
    const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
    return (
@@ -126,9 +126,12 @@ const Home = () => {
                   <Sort />
                   <Search />
                </div>
-               <div className="cards">
-                  {isLoading ? sceletons : coffeesContext}
-               </div>
+               {status === 'error' ? ( <div className="best__error">
+                  <h2>loading error <i>😕</i></h2>
+                  <p>Chances are you haven't chosen coffee yet.<br />To select a coffee, reload the page.</p>
+               </div> ) : (<div className="cards">
+                  {status === 'loading' ? sceletons : coffeesContext}
+               </div>)}
                <Pagination currentPage={currentPage} onChangePage={onChangePage} />
             </div>
          </div>

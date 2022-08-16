@@ -14,6 +14,10 @@ body {
    max-width: 1440px;
    margin: 0 auto;
    padding: 0 15px;
+
+   @media (max-width: 480px) { 
+      padding: 0;
+   }
 }
 
 h2 {
@@ -36,12 +40,21 @@ h2 {
    width: 100%;
    color: $white;
 
+   @media (max-width: 480px) { 
+      padding: 0 10px;
+   }
+
    &__top  {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       flex-wrap: wrap;
       padding-top: 52px;
+
+      @media (max-width: 480px) { 
+         flex-direction: column;
+         align-items: flex-start;
+      }
    }
 
    h1 {
@@ -111,6 +124,17 @@ h2 {
       @media (max-width: 1020px) { 
          flex-direction: column;
          align-items: flex-start;
+      }
+
+      @media (max-width: 480px) { 
+         padding: 0 10px;
+      }
+   }
+
+   &__error {
+      p {
+         text-align: center;
+         padding: 50px 0;
       }
    }
 
