@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategoryId, setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
-import { fetchCoffees } from '../redux/slices/coffeeSlice';
+import { fetchCoffees, selectCoffeeData } from '../redux/slices/coffeeSlice';
 
 import { sortList } from '../components/Sort';
 import Navigation from '../components/Navigation';
@@ -20,17 +20,14 @@ import Skeleton from '../components/Card/Skeleton';
 import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 
 const Home = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const isSearch = React.useRef(false);
    const isMounted = React.useRef(false);
-   const { items, status} = useSelector((state) => state.coffee);
-   const { categoryId, sort, sortBrand, currentPage } = useSelector(selectFilter);
-
-   const { searchValue } = React.useContext(SearchContext);
+   const { items, status} = useSelector(selectCoffeeData);
+   const { categoryId, sort, sortBrand, currentPage, searchValue } = useSelector(selectFilter);
 
    const onChangeCategory = React.useCallback((idx) => {
       dispatch(setCategoryId(idx));

@@ -36,6 +36,8 @@ export const coffeeSlice = createSlice({
    },
 });
 
+export const selectCoffeeData = (state) => state.coffee;
+
 export const { setItems } = coffeeSlice.actions;
 
 export default coffeeSlice.reducer;

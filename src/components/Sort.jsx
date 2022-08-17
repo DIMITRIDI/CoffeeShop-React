@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSort, setSortBrand } from '../redux/slices/filterSlice';
+import { selectSort, setSort, setSortBrand } from '../redux/slices/filterSlice';
 
 export const sortList = [{ name: "popularity desc", sortProperty: "rating" }, 
    { name: "popularity asc", sortProperty: "-rating" },
@@ -12,7 +12,7 @@ export const sortList = [{ name: "popularity desc", sortProperty: "rating" },
 
 function Sort() {
    const dispatch = useDispatch();
-   const sort = useSelector((state) => state.filter.sort);
+   const sort = useSelector(selectSort);
    const sortBrand = useSelector((state) => state.filter.sortBrand);
    const sortRef = React.useRef();
 
@@ -37,7 +37,6 @@ function Sort() {
          if (!event.path.includes(sortRef.current)) {
             setOpen(false);
             setOpenBrand(false);
-            console.log('click');
          }
       }
 
