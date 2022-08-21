@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectCartItemById, addItem } from '../../redux/slices/cartSlice';
@@ -27,9 +28,11 @@ function Card({ id, imageUrl, alt, title, price, weights }) {
    return (
       <div className="card">
          <img className="card__favorite" src={heart} alt="favorite" />
-         <div className="card__img">
-            <img className="img" src={imageUrl} alt={alt} />
-         </div>
+         <NavLink  to={`/coffee/${id}`}>
+            <div className="card__img">
+               <img className="img" src={imageUrl} alt={alt} />
+            </div>
+         </NavLink>
          <h3>{title}</h3>
          <div className="card__block-selector">
             <ul>

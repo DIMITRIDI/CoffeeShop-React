@@ -55,6 +55,15 @@ const Home = () => {
 
       // window.scrollTo(0, 0);
    };
+
+   // Если был первый рендер, то делаем запрос
+   React.useEffect(() => {
+      if (!isSearch.current) {
+         getCoffees();
+      }
+
+      isSearch.current = false;
+   }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
    
    // Если изменили параметры и был первый рендер, то проводим следующую проверку
    React.useEffect(() => {
@@ -69,7 +78,7 @@ const Home = () => {
          navigate(`?${queryString}`);
       }
       isMounted.current = true;
-   }, [categoryId, sort.sortProperty, sortBrand, currentPage]);
+   }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
    // Если был первый рендер, то проверяем url-параметры и сохраняем в Redux 
    React.useEffect(() => {
@@ -87,15 +96,6 @@ const Home = () => {
          isSearch.current = true;
       }
    }, []);
-
-   // Если был первый рендер, то делаем запрос
-   React.useEffect(() => {
-      if (!isSearch.current) {
-         getCoffees();
-      }
-
-      isSearch.current = false;
-   }, [categoryId, sort.sortProperty, sortBrand, searchValue, currentPage]);
 
    const coffeesContext = items.map(obj => <Card key={obj.id} {...obj} />);
    const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);

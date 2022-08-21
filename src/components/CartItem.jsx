@@ -21,25 +21,25 @@ const CartItem = ({ id, imageUrl, alt, title, weight, price, count }) => {
    };
 
    return (
-      <div class="cart__item">
-         <div class="cart__item-img">
+      <div className="cart__item">
+         <div className="cart__item-img">
             <img src={imageUrl} alt={alt} />
          </div>
-         <div class="cart__item-info">
+         <div className="cart__item-info">
             <h3>{title}</h3>
             <p>{weight} g.</p>
          </div>
          <div className="cart__item-flex">
-            <div class="cart__item-count">
-               <div onClick={onClickMinus} class="cart__button">-</div>
+            <div className="cart__item-count">
+               <div onClick={onClickMinus} className="cart__button">-</div>
                <b>{count}</b>
-               <div onClick={onClickPlus} class="cart__button">+</div>
+               <div onClick={onClickPlus} className="cart__button">+</div>
             </div>
-            <div class="cart__item-price">
+            <div className="cart__item-price">
                <b>{price * count} $</b>
             </div>
-            <div class="cart__item-remove">
-               <div onClick={onClickRemove} class="cart__button">x</div>
+            <div className="cart__item-remove">
+               <div onClick={onClickRemove} className="cart__button">x</div>
             </div>
          </div>
       </div>

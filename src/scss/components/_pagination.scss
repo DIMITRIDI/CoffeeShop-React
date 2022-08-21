@@ -1,5 +1,6 @@
 .pagination {
    display: flex;
+   margin-top: 25px;
 
    @media (max-width: 480px) { 
       justify-content: center;

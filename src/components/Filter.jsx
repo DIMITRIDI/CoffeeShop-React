@@ -2,7 +2,7 @@ import React from "react";
 
 function Filter({ value, onChangeCategory }) {
 
-   const categories = ["All", "Instant", "Grain", "Ground", "Portion"];
+   const categories = ["All", "Instant", "Grainy", "Ground", "Portion"];
 
    return (
          <div className="filter__block">
