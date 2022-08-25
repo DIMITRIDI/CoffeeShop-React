@@ -1,24 +1,33 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectSort, setSort, setSortBrand } from '../redux/slices/filterSlice';
+import { selectSort, selectSortBrand, setSort, setSortBrand, SortPropertyEnum } from '../redux/slices/filterSlice';
 
-export const sortList = [{ name: "popularity desc", sortProperty: "rating" }, 
-   { name: "popularity asc", sortProperty: "-rating" },
-   { name: "price desc", sortProperty: "price" },
-   { name: "price asc", sortProperty: "-price" },
-   { name: "alphabetical desc", sortProperty: "title" },
-   { name: "alphabetical asc", sortProperty: "-title" }];
+type SortItem = {
+   name: string;
+   sortProperty: SortPropertyEnum;
+}
 
-function Sort() {
+type PopupClick = MouseEvent & {
+   path: Node[];
+};
+
+export const sortList: SortItem[] = [{ name: "popularity desc", sortProperty: SortPropertyEnum.RATING_DESC }, 
+   { name: "popularity asc", sortProperty: SortPropertyEnum.RATING_ASC },
+   { name: "price desc", sortProperty: SortPropertyEnum.PRICE_DESC },
+   { name: "price asc", sortProperty: SortPropertyEnum.PRICE_ASC },
+   { name: "alphabetical desc", sortProperty: SortPropertyEnum.TITLE_DESC },
+   { name: "alphabetical asc", sortProperty: SortPropertyEnum.TITLE_ASC }];
+
+function SortPopup() {
    const dispatch = useDispatch();
    const sort = useSelector(selectSort);
-   const sortBrand = useSelector((state) => state.filter.sortBrand);
-   const sortRef = React.useRef();
+   const sortBrand = useSelector(selectSortBrand);
+   const sortRef = React.useRef<HTMLDivElement>(null);
 
    const [open, setOpen] = React.useState(false);
 
-   const onClickListItem = (obj) => {
+   const onClickListItem = (obj: SortItem) => {
       dispatch(setSort(obj));
       setOpen(false);
    }
@@ -27,14 +36,15 @@ function Sort() {
    const listOpenBrand = ["all", "Jardin", "Jacobs", "Lavazza", "Kimbo", "Nescafe"];
    const sortNameBrand = listOpenBrand[sortBrand];
 
-   const onClickListOpenBrend = (j) => {
+   const onClickListOpenBrend = (j: number) => {
       dispatch(setSortBrand(j));
       setOpenBrand(false);
    }
 
    React.useEffect(() => {
-      const handleClickOutside = (event) => {
-         if (!event.path.includes(sortRef.current)) {
+      const handleClickOutside = (event: MouseEvent) => {
+         const _event = event as PopupClick;
+         if (sortRef.current && !_event.path.includes(sortRef.current)) {
             setOpen(false);
             setOpenBrand(false);
          }
@@ -89,4 +99,4 @@ function Sort() {
    )
 }
 
-export default Sort;
+export default SortPopup;

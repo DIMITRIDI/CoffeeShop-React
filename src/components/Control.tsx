@@ -10,7 +10,7 @@ import user from "../assets/images/user.svg";
 function Control() {
    const { items, totalPrice } = useSelector(selectCart);
 
-   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
 
    return (
       <ul className="header__top-right">

@@ -6,25 +6,25 @@ import { setSearchValue } from '../redux/slices/filterSlice';
 
 import search from "../assets/images/search.svg";
 
-function Search() {
+const Search: React.FC = () => {
    const dispatch = useDispatch();
-   const [value, setValue] = React.useState('');
-   const inputRef = React.useRef();
+   const [value, setValue] = React.useState<string>('');
+   const inputRef = React.useRef<HTMLInputElement>(null);
 
    const onClickClear = () => {
       dispatch(setSearchValue(''));
       setValue('');
-      inputRef.current.focus();
+      inputRef.current?.focus();
    };
 
    const updateSearchValue = React.useCallback(
-      debounce((str) => {
+      debounce((str: string) => {
          dispatch(setSearchValue(str));
       }, 1000), 
       [], 
    );
 
-   const onChangeInput = (event) => {
+   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue(event.target.value);
       updateSearchValue(event.target.value);
    }

@@ -6,10 +6,32 @@ import { useDispatch, useSelector } from "react-redux";
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
 
-import { selectCartItemById, addItem } from '../redux/slices/cartSlice';
+import { selectCartItemById, addItem, CartItem } from '../redux/slices/cartSlice';
 
-function FullCoffee({ imageUrl, alt, title, price, weights }) {
-   const [coffee, setCoffee] = React.useState();
+type FullCoffeeProps = {
+   id: string;
+   title: string;
+   price: number;
+   imageUrl: string;
+   alt: string;
+   weights: number[];
+};
+
+const FullCoffee: React.FC<FullCoffeeProps> = ({ title, price, imageUrl, alt }) => {
+   const [coffee, setCoffee] = React.useState<{
+      imageUrl: string;
+      alt: string;
+      title: string;
+      price: number;
+      weights: number;
+      category__full: string;
+      description: string;
+      packing: string;
+      type__drink: string;
+      type__grains: string;
+      technology: string;
+      roasting: string;
+   }>();
    const { id } = useParams();
    const navigate = useNavigate();
 
@@ -28,25 +50,26 @@ function FullCoffee({ imageUrl, alt, title, price, weights }) {
    }, []);
 
    const dispatch = useDispatch();
-   const cartItem = useSelector(selectCartItemById(id));
+   const cartItem = useSelector(selectCartItemById(id!));
    // const [activeWeight, setActiveWeight] = React.useState(0);
 
    const addedCount = cartItem ? cartItem.count : 0;
 
    const onClickAdd = () => {
-      const item = {
-         id,
+      const item: CartItem = {
+         id: '',
          title,
          price,
          imageUrl,
          alt,
-         // weight: weights[activeWeight],
+         weight: 0,
+         count: 0
       };
       dispatch(addItem(item));
    };
 
    if (!coffee) {
-      return 'Loading...'
+      return <>Loading...</>;
    }
 
    return (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -17,7 +16,7 @@ function App() {
          <Route path="/our-coffee" element={<OurCoffee />} />
          <Route path="/four-your-pleasure" element={<ForYourPleasure />} />
          <Route path="/cart" element={<Cart />} />
-         <Route path="/coffee/:id" element={<FullCoffee />} />
+         <Route path="/coffee/:id" element={<FullCoffee id={""} title={""} price={0} imageUrl={""} alt={""} weights={[]} />} />
          <Route path="*" element={<Page404 />} />
       </Routes>
    );

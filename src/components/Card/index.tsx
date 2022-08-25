@@ -2,11 +2,21 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectCartItemById, addItem } from '../../redux/slices/cartSlice';
+import { selectCartItemById, addItem, CartItem } from '../../redux/slices/cartSlice';
 
 import heart from "../../assets/images/heart.svg";
 
-function Card({ id, imageUrl, alt, title, price, weights }) {
+type CardProps = {
+   id: string;
+   title: string;
+   price: number;
+   imageUrl: string;
+   alt: string;
+   weights: number[];
+   rating: number;
+};
+
+const Card: React.FC<CardProps> = ({ id, imageUrl, alt, title, price, weights }) => {
    const dispatch = useDispatch();
    const cartItem = useSelector(selectCartItemById(id));
    const [activeWeight, setActiveWeight] = React.useState(0);
@@ -14,13 +24,14 @@ function Card({ id, imageUrl, alt, title, price, weights }) {
    const addedCount = cartItem ? cartItem.count : 0;
 
    const onClickAdd = () => {
-      const item = {
+      const item: CartItem = {
          id,
          title,
          price,
          imageUrl,
          alt,
          weight: weights[activeWeight],
+         count: 0
       };
       dispatch(addItem(item));
    };
@@ -32,8 +43,8 @@ function Card({ id, imageUrl, alt, title, price, weights }) {
             <div className="card__img">
                <img className="img" src={imageUrl} alt={alt} />
             </div>
+            <h3>{title}</h3>
          </NavLink>
-         <h3>{title}</h3>
          <div className="card__block-selector">
             <ul>
                {weights.map((weight, i) => (

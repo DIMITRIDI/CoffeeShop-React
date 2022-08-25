@@ -1,8 +1,9 @@
+import React from 'react';
 import { NavLink } from "react-router-dom";
 
 import headerLogo from "../assets/images/header-logo.png";
 
-function Navigation() {
+const Navigation: React.FC = () => {
    return (
       <>
          <div className="header__top-left">

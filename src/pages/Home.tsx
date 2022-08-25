@@ -1,10 +1,11 @@
 import React from 'react';
 import qs from 'qs';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { useAppDispatch } from '../redux/store';
 import { setCategoryId, setCurrentPage, setFilters, selectFilter } from '../redux/slices/filterSlice';
-import { fetchCoffees, selectCoffeeData } from '../redux/slices/coffeeSlice';
+import { fetchCoffees, SearchCoffeeParams, selectCoffeeData } from '../redux/slices/coffeeSlice';
 
 import { sortList } from '../components/Sort';
 import Navigation from '../components/Navigation';
@@ -21,19 +22,19 @@ import banerLogo from "../assets/images/baner-logo.png";
 import homeAbout from "../assets/images/home-about.jpg";
 import Pagination from '../components/Pagination';
 
-const Home = () => {
+const Home: React.FC = () => {
    const navigate = useNavigate();
-   const dispatch = useDispatch();
+   const dispatch = useAppDispatch();
    const isSearch = React.useRef(false);
    const isMounted = React.useRef(false);
    const { items, status} = useSelector(selectCoffeeData);
    const { categoryId, sort, sortBrand, currentPage, searchValue } = useSelector(selectFilter);
 
-   const onChangeCategory = React.useCallback((idx) => {
+   const onChangeCategory = React.useCallback((idx: number) => {
       dispatch(setCategoryId(idx));
    }, []);
 
-   const onChangePage = (page) => {
+   const onChangePage = (page: number) => {
       dispatch(setCurrentPage(page));
    };
 
@@ -44,13 +45,14 @@ const Home = () => {
       const brand = sortBrand > 0 ? `&brand=${sortBrand}` : '';
       const search = searchValue ? `&search=${searchValue}` : '';
 
-      dispatch(fetchCoffees({
-         order,
-         sortBy,
-         category,
-         brand,
-         search,
-         currentPage
+      dispatch(
+         fetchCoffees({
+            order,
+            sortBy,
+            category,
+            brand,
+            search,
+            currentPage: String(currentPage)
       }));
 
       // window.scrollTo(0, 0);
@@ -83,21 +85,24 @@ const Home = () => {
    // Если был первый рендер, то проверяем url-параметры и сохраняем в Redux 
    React.useEffect(() => {
       if (window.location.search) {
-         const params = qs.parse(window.location.search.substring(1));
+         const params = qs.parse(window.location.search.substring(1)) as unknown as SearchCoffeeParams;
          
-         const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
+         const sort = sortList.find(obj => obj.sortProperty === params.sortBy);
 
          dispatch(
             setFilters({
-               ...params,
-               sort,
+               searchValue: params.search,
+               categoryId: Number(params.category),
+               currentPage: Number(params.currentPage),
+               sort: sort || sortList[0],
+               sortBrand: Number(params.brand),
             }),
          );
          isSearch.current = true;
       }
    }, []);
 
-   const coffeesContext = items.map(obj => <Card key={obj.id} {...obj} />);
+   const coffeesContext = items.map((obj: any) => <Card key={obj.id} {...obj} />);
    const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
 
    return (
