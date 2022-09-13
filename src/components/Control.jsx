@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 
@@ -10,7 +11,7 @@ import user from "../assets/images/user.svg";
 function Control() {
    const { items, totalPrice } = useSelector(selectCart);
 
-   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
+   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
    return (
       <ul className="header__top-right">
@@ -21,7 +22,11 @@ function Control() {
                <span>{totalCount}</span>
             </NavLink>
          </li>
-         <li><img src={favorite} alt="heart" /></li>
+         <li>
+            <NavLink to="/four-your-pleasure">
+               <img src={favorite} alt="heart" />
+            </NavLink>
+         </li>
          <li><img src={user} alt="user" /></li>
       </ul>
    )

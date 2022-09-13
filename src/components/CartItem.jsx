@@ -1,23 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux/es/exports';
+import clsx from 'clsx';
 
-import { addItem, CartItem, minusItem, removeItem } from '../redux/slices/cartSlice';
+import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
 
-type CartItemProps = {
-   id: string;
-   title: string;
-   alt: string;
-   weight: number;
-   price: number;
-   count: number;
-   imageUrl: string;
-};
-
-const CartItemBlock: React.FC<CartItemProps> = ({ id, imageUrl, alt, title, weight, price, count }) => {
+const CartItem = ({ id, imageUrl, alt, title, weight, price, count }) => {
    const dispatch = useDispatch();
 
    const onClickPlus = () => {
-      dispatch(addItem({ id } as CartItem ));
+      dispatch(addItem({ id }));
    };
 
    const onClickMinus = () => {
@@ -41,19 +32,19 @@ const CartItemBlock: React.FC<CartItemProps> = ({ id, imageUrl, alt, title, weig
          </div>
          <div className="cart__item-flex">
             <div className="cart__item-count">
-               <div onClick={onClickMinus} className="cart__button">-</div>
+               <button disabled={count === 1} onClick={onClickMinus} className={clsx("cart__button", {'cart__button-disabled' : count === 1})}>-</button>
                <b>{count}</b>
-               <div onClick={onClickPlus} className="cart__button">+</div>
+               <button onClick={onClickPlus} className="cart__button">+</button>
             </div>
             <div className="cart__item-price">
-               <b>{price * count} $</b>
+               <b>{(price * count).toFixed(2)} $</b>
             </div>
             <div className="cart__item-remove">
-               <div onClick={onClickRemove} className="cart__button">x</div>
+               <button onClick={onClickRemove} className="cart__button">x</button>
             </div>
          </div>
       </div>
    )
 }
 
-export default CartItemBlock;
+export default CartItem;

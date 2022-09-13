@@ -1,19 +1,33 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { selectCoffeeData } from '../redux/slices/coffeeSlice';
+import { setCurrentPage, selectFilter } from '../redux/slices/filterSlice';
+
 
 import Navigation from '../components/Navigation';
 import Control from '../components/Control';
 import About from '../components/About';
-import Filter from '../components/Filter';
-import Sort from '../components/Sort';
 import Search from '../components/Search';
 import Card from '../components/Card';
 import Footer from "../components/Footer";
+import Skeleton from '../components/Card/Skeleton';
+import Pagination from '../components/Pagination';
 
 import ourAbout from "../assets/images/our-about.jpg";
 
-import coffees from "../assets/coffees.json";
-
 const OurCoffee = () => {
+   const dispatch = useDispatch();
+   const { items, status} = useSelector(selectCoffeeData);
+   const { currentPage } = useSelector(selectFilter);
+
+   const onChangePage = (page) => {
+      dispatch(setCurrentPage(page));
+   };
+
+   const coffeesContext = items.map(obj => <Card key={obj.id} {...obj} />);
+   const sceletons = [...new Array(8)].map((_, index) => <Skeleton key={index} />);
+
    return (
       <>
          <header className="header header__our-bg">
@@ -29,16 +43,13 @@ const OurCoffee = () => {
          <div className="best">
             <div className="wrapper">
                <h2>Our Best</h2>
-               <div className="best__block">
-                  <Filter />
-                  <Sort />
-                  <Search />
-               </div>
-               <div className="cards">
-                  {coffees.map((obj) => (
-                     <Card key={obj.id} {...obj} />
-                  ))}
-               </div>
+               {status === 'error' ? ( <div className="best__error">
+                  <h2>loading error <i>😕</i></h2>
+                  <p>Chances are you haven't chosen coffee yet.<br />To select a coffee, reload the page.</p>
+               </div> ) : (<div className="cards">
+                  {status === 'loading' ? sceletons : coffeesContext}
+               </div>)}
+               <Pagination currentPage={currentPage} onChangePage={onChangePage} />
             </div>
          </div>
          <Footer />

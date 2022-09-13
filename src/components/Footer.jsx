@@ -1,10 +1,9 @@
-import React from 'react';
 import { NavLink } from "react-router-dom";
 
 import footerLogo from "../assets/images/footer-logo.png";
 import aboutLogo from "../assets/images/about-logo.png";
 
-const Footer: React.FC = () => {
+function Footer() {
    return (
       <footer className="footer">
          <div className="wrapper">

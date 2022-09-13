@@ -1,13 +1,9 @@
 import React from "react";
 
-type FilterProps ={
-   value: number;
-   onChangeCategory: (i: number) => void;
-};
+function Filter({ value, onChangeCategory }) {
 
-const categories = ["All", "Instant", "Grainy", "Ground", "Portion"];
+   const categories = ["All", "Instant", "Grainy", "Ground", "Portion"];
 
-const Filter: React.FC<FilterProps> = ({ value, onChangeCategory }) => {
    return (
          <div className="filter__block">
             <p>Or filter:</p>

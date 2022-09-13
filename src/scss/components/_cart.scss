@@ -234,6 +234,21 @@
          transform: translateY(1px);
       }
 
+      &-disabled {
+         opacity: 0.4;
+         background-color: $grey;
+         cursor: default;
+
+         &:hover {
+            background-color: $grey;
+         }
+
+         &:active {
+            transform: none;
+            background-color: $grey;
+         }
+      }
+
       @media (max-width: 576px) {
          padding: 5px 10px;
       }

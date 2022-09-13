@@ -2,21 +2,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectCartItemById, addItem, CartItem } from '../../redux/slices/cartSlice';
+import { selectCartItemById, addItem } from '../../redux/slices/cartSlice';
+import { addFavorite } from '../../redux/slices/favoriteSlice';
 
 import heart from "../../assets/images/heart.svg";
+import heartLiked from "../../assets/images/heart-liked.svg";
 
-type CardProps = {
-   id: string;
-   title: string;
-   price: number;
-   imageUrl: string;
-   alt: string;
-   weights: number[];
-   rating: number;
-};
-
-const Card: React.FC<CardProps> = ({ id, imageUrl, alt, title, price, weights }) => {
+function Card({ id, imageUrl, alt, title, price, weights }) {
    const dispatch = useDispatch();
    const cartItem = useSelector(selectCartItemById(id));
    const [activeWeight, setActiveWeight] = React.useState(0);
@@ -24,27 +16,40 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, alt, title, price, weights })
    const addedCount = cartItem ? cartItem.count : 0;
 
    const onClickAdd = () => {
-      const item: CartItem = {
+      const item = {
          id,
          title,
          price,
          imageUrl,
          alt,
          weight: weights[activeWeight],
-         count: 0
       };
       dispatch(addItem(item));
    };
 
+   const onClickAddFavorite = () => {
+      const itemFavorite = {
+         id,
+         title,
+         price,
+         imageUrl,
+         alt,
+         weight: weights[activeWeight],
+      };
+      dispatch(addFavorite(itemFavorite));
+   };
+
    return (
       <div className="card">
-         <img className="card__favorite" src={heart} alt="favorite" />
+         <button onClick={onClickAddFavorite}>
+            <img className="card__favorite" src={onClickAddFavorite ? heart : heartLiked} alt="favorite" />
+         </button>
          <NavLink  to={`/coffee/${id}`}>
             <div className="card__img">
                <img className="img" src={imageUrl} alt={alt} />
             </div>
-            <h3>{title}</h3>
          </NavLink>
+         <h3>{title}</h3>
          <div className="card__block-selector">
             <ul>
                {weights.map((weight, i) => (
